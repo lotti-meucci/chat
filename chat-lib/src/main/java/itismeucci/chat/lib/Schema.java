@@ -1,12 +1,10 @@
 package itismeucci.chat.lib;
 import java.util.*;
-import com.fasterxml.jackson.annotation.*;
 
 /** Classe di base per ogni schema JSON di JCSP. */
 public abstract class Schema
 {
 	/** Nome dello schema. */
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	private String schema;
 
 	/** Classi degli schemi. */
@@ -21,7 +19,7 @@ public abstract class Schema
 	 * Crea un'istanza con il relativo nome dello schema.
 	 * @param schema Nome dello schema.
 	 */
-	protected Schema(String schema) throws SchemaException
+	protected Schema(String schema)
 	{
 		this.schema = schema;
 	}
@@ -30,14 +28,23 @@ public abstract class Schema
 	 * Getter del nome dello schema.
 	 * @return Nome dello schema.
 	 */
-	@JsonIgnore
 	public final String getSchema()
 	{
 		return schema;
 	}
 
+	/**
+	 * Clona l'istanza corrente.
+	 * @return Una copia dell'istana corrente.
+	 * @throws ValidationException Clonazione non valida.
+	 */
 	public abstract Schema cloneSchema() throws ValidationException;
 
+	/**
+	 * Getter della classe per nome dello schema.
+	 * @param name Nome dello schema.
+	 * @return Classe con il relativo nome dello schema.
+	 */
 	private static Class<? extends Schema> getSchemaClass(String name)
 	{
 		if (name != null)
@@ -46,9 +53,12 @@ public abstract class Schema
 			{
 				try
 				{
+					// Ottiene il construttore vuoto della classe e lo rende accessibile.
 					var constructor = schemaClass.getDeclaredConstructor();
 					constructor.setAccessible(true);
 
+					// Crea un'istanza della classe con il costruttore appena ottenuto
+					// e controlla se il suo nome dello schema equivale al nome specificato.
 					if (name.equals(constructor.newInstance().getSchema()))
 						return schemaClass;
 				}
@@ -63,6 +73,8 @@ public abstract class Schema
 	 * Questo metodo genera un'istanza schema da JSON.
 	 * @param json Stringa JSON da interpretare.
 	 * @return Istanza della classe relativa allo schema.
+	 * @throws ValidationException Lo schema non è valido.
+	 * @throws SchemaException Il nome dello schema non esiste.
 	 */
 	public final static Schema fromJson(String json) throws
 		ValidationException, SchemaException
@@ -85,10 +97,17 @@ public abstract class Schema
 			throw new SchemaException();
 		}
 
+		// Clona lo schema per controllarne la validità.
 		schema.cloneSchema();
+
 		return schema;
 	}
 
+	/**
+	 * Converte lo schema specificato in una stringa JSON.
+	 * @param obj Oggetto dello schema.
+	 * @return Stringa JSON corrispondente allo schema specificato.
+	 */
 	public final static String toJson(Schema obj)
 	{
 		if (obj == null)

@@ -1,12 +1,18 @@
 package itismeucci.chat.lib;
 
+/** Eccezione generata quando uno schema "join" non è valido. */
 public final class JoinException extends ValidationException
 {
-	private final JoinErrorType errorType;
+	/** Tipo di errore. */
+	private final JoinErrorType error;
 
+	/**
+	 * Crea una istanza col tipo di errore specificato.
+	 * @param error Il tipo di errore.
+	 */
 	public JoinException(JoinErrorType errorType)
 	{
-		this.errorType = errorType;
+		this.error = errorType;
 	}
 
 	@Override
@@ -14,7 +20,7 @@ public final class JoinException extends ValidationException
 	{
 		try
 		{
-			return new JoinErrorSchema(errorType);
+			return new JoinErrorSchema(error);
 		}
 		catch (Exception e)
 		{

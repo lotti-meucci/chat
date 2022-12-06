@@ -1,17 +1,11 @@
 package itismeucci.chat.lib;
 
+/** Eccezione generata quando uno schema è inesistente o mal formattato. */
 public final class SchemaException extends ValidationException
 {
 	@Override
 	public SchemaErrorSchema getResponse()
 	{
-		try
-		{
-			return new SchemaErrorSchema();
-		}
-		catch (Exception e)
-		{
-			return null;
-		}
+		return new SchemaErrorSchema();
 	}
 }

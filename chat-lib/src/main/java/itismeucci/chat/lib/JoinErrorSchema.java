@@ -1,29 +1,36 @@
 package itismeucci.chat.lib;
-import com.fasterxml.jackson.annotation.*;
 
 /** Classe dello schema "join-error". */
 public final class JoinErrorSchema extends Schema
 {
 	/** Tipo di errore. */
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	private String error;
 
-	private JoinErrorSchema() throws SchemaException
+	/** [Reflection] crea un'istanza. */
+	private JoinErrorSchema()
 	{
 		super("join-error");
 	}
 
+	/**
+	 * Crea un'istanza con il relativo tipo di errore.
+	 * @param error Il tipo di errore.
+	 * @throws SchemaException Tipo di errore nullo.
+	 */
 	protected JoinErrorSchema(JoinErrorType error) throws SchemaException
 	{
 		this();
 
 		if (error == null)
-			throw new IllegalArgumentException("'joinErrorType' was null.");
+			throw new SchemaException();
 
 		this.error = error.name().toLowerCase();
 	}
 
-	@JsonIgnore
+	/**
+	 * Getter del tipo di errore.
+	 * @return Il tipo di errore.
+	 */
 	public JoinErrorType getError()
 	{
 		try
@@ -39,17 +46,6 @@ public final class JoinErrorSchema extends Schema
 	@Override
 	public JoinErrorSchema cloneSchema() throws SchemaException
 	{
-		try
-		{
-			return new JoinErrorSchema();
-		}
-		catch (SchemaException e)
-		{
-			throw e;
-		}
-		catch (Exception e)
-		{
-			return null;
-		}
+		return new JoinErrorSchema(getError());
 	}
 }

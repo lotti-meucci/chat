@@ -1,14 +1,16 @@
 package itismeucci.chat.lib;
 
+/** Classe dello schema "state-error". */
 public final class StateErrorSchema extends Schema
 {
-	public StateErrorSchema() throws SchemaException
+	/** Crea un'istanza. */
+	public StateErrorSchema()
 	{
 		super("state-error");
 	}
 
 	@Override
-	public StateErrorSchema cloneSchema() throws SchemaException
+	public StateErrorSchema cloneSchema()
 	{
 		return new StateErrorSchema();
 	}

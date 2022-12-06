@@ -1,14 +1,16 @@
 package itismeucci.chat.lib;
 
+/** Classe dello schema "schema-error". */
 public final class SchemaErrorSchema extends Schema
 {
-	public SchemaErrorSchema() throws SchemaException
+	/** Crea un'istanza. */
+	public SchemaErrorSchema()
 	{
 		super("schema-error");
 	}
 
 	@Override
-	public SchemaErrorSchema cloneSchema() throws SchemaException
+	public SchemaErrorSchema cloneSchema()
 	{
 		return new SchemaErrorSchema();
 	}

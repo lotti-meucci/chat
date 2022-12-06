@@ -1,14 +1,13 @@
 package itismeucci.chat.lib;
-import com.fasterxml.jackson.annotation.*;
 
 /** Classe dello schema "join". */
 public final class JoinSchema extends Schema
 {
 	/** Nome utente. */
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	private String username;
 
-	private JoinSchema() throws SchemaException
+	/** [Reflection] crea un'istanza. */
+	private JoinSchema()
 	{
 		super("join");
 	}
@@ -16,6 +15,7 @@ public final class JoinSchema extends Schema
 	/**
 	 * Crea un'istanza con il relativo nome utente.
 	 * @param username Nome utente.
+	 * @throws SchemaException Il nome utente è nullo.
 	 * @throws JoinException Il nome utente non è valido secondo il protocollo JCSP.
 	 */
 	public JoinSchema(String username) throws SchemaException, JoinException
@@ -39,12 +39,16 @@ public final class JoinSchema extends Schema
 	 * Getter del nome utente.
 	 * @return Nome utente.
 	 */
-	@JsonIgnore
 	public String getUsername()
 	{
 		return username;
 	}
 
+	/**
+	 * Genera un'eccezione se il nome utente esiste già.
+	 * @param existingUsernames Nomi utente esistenti.
+	 * @throws JoinException Il nome utente è gia presente (uniqeness).
+	 */
 	public void checkUsernameUniqeness(Iterable<String> existingUsernames) throws JoinException
 	{
 		if (existingUsernames == null)
