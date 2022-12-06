@@ -7,6 +7,11 @@ public abstract class SignedSchema extends Schema
 	/** UUID dell'utente. */
 	private UUID id;
 
+	protected SignedSchema(String schema)
+	{
+		super(schema);
+	}
+
 	/**
 	 * Crea un'istanza con il relativo nome dello schema e ID utente.
 	 * @param schema Nome dello schema.

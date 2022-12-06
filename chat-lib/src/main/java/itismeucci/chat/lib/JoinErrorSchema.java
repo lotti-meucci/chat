@@ -17,7 +17,7 @@ public final class JoinErrorSchema extends Schema
 	 * @param error Il tipo di errore.
 	 * @throws SchemaException Tipo di errore nullo.
 	 */
-	protected JoinErrorSchema(JoinErrorType error) throws SchemaException
+	public JoinErrorSchema(JoinErrorType error) throws SchemaException
 	{
 		this();
 

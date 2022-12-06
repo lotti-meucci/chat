@@ -12,7 +12,8 @@ public abstract class Schema
 		SchemaErrorSchema.class,
 		StateErrorSchema.class,
 		JoinSchema.class,
-		JoinErrorSchema.class
+		JoinErrorSchema.class,
+		JoinOkSchema.class
 	);
 
 	/**
