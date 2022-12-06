@@ -1,6 +1,17 @@
 package itismeucci.chat.lib;
 
-public final class StateException extends Exception
+public final class StateException extends ValidationException
 {
-	public StateException() { }
+	@Override
+	public StateErrorSchema getResponse()
+	{
+		try
+		{
+			return new StateErrorSchema();
+		}
+		catch (Exception e)
+		{
+			return null;
+		}
+	}
 }

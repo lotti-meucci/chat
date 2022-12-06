@@ -1,6 +1,17 @@
 package itismeucci.chat.lib;
 
-public final class SchemaException extends Exception
+public final class SchemaException extends ValidationException
 {
-	public SchemaException() { }
+	@Override
+	public SchemaErrorSchema getResponse()
+	{
+		try
+		{
+			return new SchemaErrorSchema();
+		}
+		catch (Exception e)
+		{
+			return null;
+		}
+	}
 }

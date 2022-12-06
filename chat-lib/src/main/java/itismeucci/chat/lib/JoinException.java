@@ -1,17 +1,24 @@
 package itismeucci.chat.lib;
 
-public final class JoinException extends Exception
+public final class JoinException extends ValidationException
 {
-	private final JoinExceptionType type;
+	private final JoinErrorType errorType;
 
-	public JoinException(JoinExceptionType type)
+	public JoinException(JoinErrorType errorType)
 	{
-		super(type.name().toLowerCase());
-		this.type = type;
+		this.errorType = errorType;
 	}
 
-	public JoinExceptionType getType()
+	@Override
+	public JoinErrorSchema getResponse()
 	{
-		return type;
+		try
+		{
+			return new JoinErrorSchema(errorType);
+		}
+		catch (Exception e)
+		{
+			return null;
+		}
 	}
 }

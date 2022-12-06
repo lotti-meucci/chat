@@ -1,57 +1,63 @@
 package itismeucci.chat.lib;
+import com.fasterxml.jackson.annotation.*;
 
 /** Classe dello schema "join". */
 public final class JoinSchema extends Schema
 {
 	/** Nome utente. */
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	private String username;
+
+	private JoinSchema() throws SchemaException
+	{
+		super("join");
+	}
 
 	/**
 	 * Crea un'istanza con il relativo nome utente.
 	 * @param username Nome utente.
 	 * @throws JoinException Il nome utente non è valido secondo il protocollo JCSP.
 	 */
-	protected JoinSchema(String username) throws SchemaException, JoinException
+	public JoinSchema(String username) throws SchemaException, JoinException
 	{
-		super("join");
+		this();
 
 		if (username == null)
 			throw new SchemaException();
 
 		if (username.length() < 2 || username.length() > 16)
-			throw new JoinException(JoinExceptionType.LENGTH);
+			throw new JoinException(JoinErrorType.LENGTH);
 
 		for (var i = 0; i < username.length(); i++)
 			if (username.charAt(i) <= 0x20 || username.charAt(i) > 0x7E)
-				throw new JoinException(JoinExceptionType.INTERVAL);
+				throw new JoinException(JoinErrorType.INTERVAL);
 
 		this.username = username;
-	}
-
-	/**
-	 * Crea un'istanza con il relativo nome utente
-	 * controllandone l'unicità.
-	 * @param username Nome utente.
-	 * @param existingUsernames Insieme di nomi utente esistenti.
-	 * @throws JoinException Il nome utente non è valido secondo il protocollo JCSP.
-	 */
-	protected JoinSchema(String username, Iterable<String> existingUsernames) throws
-		SchemaException,
-		JoinException
-	{
-		this(username);
-
-		for (var existingUsername : existingUsernames)
-			if (existingUsername.equals(existingUsername))
-				throw new JoinException(JoinExceptionType.UNIQUENESS);
 	}
 
 	/**
 	 * Getter del nome utente.
 	 * @return Nome utente.
 	 */
-	public final String getUsername()
+	@JsonIgnore
+	public String getUsername()
 	{
 		return username;
+	}
+
+	public void checkUsernameUniqeness(Iterable<String> existingUsernames) throws JoinException
+	{
+		if (existingUsernames == null)
+			return;
+
+		for (var existingUsername : existingUsernames)
+			if (getUsername().equals(existingUsername))
+				throw new JoinException(JoinErrorType.UNIQUENESS);
+	}
+
+	@Override
+	public JoinSchema cloneSchema() throws SchemaException, JoinException
+	{
+		return new JoinSchema(getUsername());
 	}
 }

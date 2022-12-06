@@ -1,10 +1,12 @@
 package itismeucci.chat.lib;
 import java.util.*;
+import com.fasterxml.jackson.annotation.*;
 
 /** Classe di base di uno schema JSON di JCSP con ID. */
 public abstract class SignedSchema extends Schema
 {
 	/** UUID dell'utente. */
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	private UUID id;
 
 	/**
@@ -23,38 +25,32 @@ public abstract class SignedSchema extends Schema
 	}
 
 	/**
-	 * Crea un'istanza con il relativo nome dello schema e ID utente
-	 * controllandone l'esistenza.
-	 * @param schema Nome dello schema.
-	 * @param id UUID dell'utente.
-	 * @param existingIds Insieme di UUID esistenti.
+	 * Getter dell'UUID dell'utente.
+	 * @return UUID dell'utente.
 	 */
-	protected SignedSchema(String schema, UUID id, Iterable<UUID> existingIds) throws
-		SchemaException,
-		StateException
+	@JsonIgnore
+	public final UUID getId()
 	{
-		this(schema, id);
+		return id;
+	}
+
+	public final void checkIdExistence(Iterable<UUID> existingIds) throws StateException
+	{
 		var exists = false;
 
-		for (var existingId : existingIds)
+		if (existingIds != null)
 		{
-			if (id.equals(existingId))
+			for (var existingId : existingIds)
 			{
-				exists = true;
-				break;
+				if (getId().equals(existingId))
+				{
+					exists = true;
+					break;
+				}
 			}
 		}
 
 		if (!exists)
 			throw new StateException();
-	}
-
-	/**
-	 * Getter dell'UUID dell'utente.
-	 * @return UUID dell'utente.
-	 */
-	public final UUID getId()
-	{
-		return id;
 	}
 }

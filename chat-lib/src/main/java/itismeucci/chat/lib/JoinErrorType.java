@@ -1,8 +1,8 @@
 package itismeucci.chat.lib;
 
-public enum JoinExceptionType
+public enum JoinErrorType
 {
 	UNIQUENESS,
 	LENGTH,
-	INTERVAL
+	INTERVAL;
 }
