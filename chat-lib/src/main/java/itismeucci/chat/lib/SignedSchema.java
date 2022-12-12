@@ -44,21 +44,7 @@ public abstract class SignedSchema extends Schema
 	 */
 	public final void checkIdExistence(Iterable<UUID> existingIds) throws StateException
 	{
-		var exists = false;
-
-		if (existingIds != null)
-		{
-			for (var existingId : existingIds)
-			{
-				if (getId().equals(existingId))
-				{
-					exists = true;
-					break;
-				}
-			}
-		}
-
-		if (!exists)
+		if (!Utils.exists(getId(), existingIds))
 			throw new StateException();
 	}
 }

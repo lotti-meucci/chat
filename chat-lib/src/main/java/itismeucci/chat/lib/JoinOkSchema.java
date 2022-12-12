@@ -14,7 +14,7 @@ public final class JoinOkSchema extends SignedSchema
 	 * Crea un'istanza col relativo UUID.
 	 * @param id Nuovo ID utente.
 	 */
-	protected JoinOkSchema(UUID id) throws SchemaException
+	public JoinOkSchema(UUID id) throws SchemaException
 	{
 		super("join-ok", id);
 	}
