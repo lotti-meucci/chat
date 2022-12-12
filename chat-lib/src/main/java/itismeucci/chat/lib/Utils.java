@@ -43,13 +43,13 @@ public final class Utils
 		return exists;
 	}
 
-	public static <T> ArrayList<T> toArrayList(Iterable<T> iterable)
+	public static <T> T[] toArray(Iterable<T> iterable, T[] array)
 	{
 		var list = new ArrayList<T>();
 
 		for (var object : iterable)
 			list.add(object);
 
-		return list;
+		return list.toArray(array);
 	}
 }

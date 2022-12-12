@@ -1,24 +1,30 @@
 package itismeucci.chat.lib;
+import java.util.*;
 
-import java.util.Arrays;
-
-public class ListUpdateSchema extends Schema implements UsernamesContainer
+/** Classe dello schema "list-update". */
+public final class ListUpdateSchema extends Schema implements UsernamesContainer
 {
+	/** Lista utenti. */
 	private String[] usernames;
 
+	/** [Reflection] crea un'istanza. */
 	private ListUpdateSchema()
 	{
 		super("list-update");
 	}
 
-	public ListUpdateSchema(Iterable<String> usernames)
+	/**
+	 * Crea un'istanza con la relativa lista utenti.
+	 * @param usernames Lista utenti.
+	 */
+	public ListUpdateSchema(Iterable<String> usernames) throws SchemaException
 	{
 		this();
 
 		if (usernames == null)
 			throw new SchemaException();
 
-		// ...
+		this.usernames = Utils.toArray(usernames, new String[] { });
 	}
 
 	@Override
@@ -28,8 +34,8 @@ public class ListUpdateSchema extends Schema implements UsernamesContainer
 	}
 
 	@Override
-	public ListUpdateSchema cloneSchema()
+	public ListUpdateSchema cloneSchema() throws SchemaException
 	{
-		return null;
+		return new ListUpdateSchema(getUsernames());
 	}
 }
