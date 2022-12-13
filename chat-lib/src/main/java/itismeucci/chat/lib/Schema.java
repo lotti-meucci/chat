@@ -36,7 +36,7 @@ public abstract class Schema
 
 	/**
 	 * Clona l'istanza corrente.
-	 * @return Una copia dell'istana corrente.
+	 * @return Una copia dell'istanza corrente.
 	 * @throws ValidationException Clonazione non valida.
 	 */
 	public abstract Schema cloneSchema() throws ValidationException;

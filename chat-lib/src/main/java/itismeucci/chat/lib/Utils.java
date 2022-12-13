@@ -24,15 +24,23 @@ public final class Utils
 		throw new UnsupportedOperationException();
 	}
 
-	public static <T> boolean exists(T id, Iterable<T> existingIds)
+	public static <T> boolean exists(T id, Iterable<T> existingObjects)
 	{
 		var exists = false;
 
-		if (existingIds != null)
+		if (existingObjects != null)
 		{
-			for (var existingId : existingIds)
+			for (var existingObj : existingObjects)
 			{
-				if (id.equals(existingId))
+				if (id == null)
+				{
+					if (id == existingObj)
+					{
+						exists = true;
+						break;
+					}
+				}
+				else if (id.equals(existingObj))
 				{
 					exists = true;
 					break;

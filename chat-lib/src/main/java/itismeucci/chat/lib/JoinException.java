@@ -10,9 +10,9 @@ public final class JoinException extends ValidationException
 	 * Crea una istanza col tipo di errore specificato.
 	 * @param error Il tipo di errore.
 	 */
-	public JoinException(JoinErrorType errorType)
+	public JoinException(JoinErrorType error)
 	{
-		this.error = errorType;
+		this.error = error;
 	}
 
 	@Override
