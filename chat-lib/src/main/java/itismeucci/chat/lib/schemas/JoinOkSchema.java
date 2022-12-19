@@ -1,5 +1,6 @@
-package itismeucci.chat.lib;
+package itismeucci.chat.lib.schemas;
 import java.util.*;
+import itismeucci.chat.lib.*;
 
 /** Classe dello schema "join-ok". */
 public final class JoinOkSchema extends SignedSchema

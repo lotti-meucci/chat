@@ -1,5 +1,6 @@
-package itismeucci.chat.lib;
+package itismeucci.chat.lib.schemas;
 import java.util.*;
+import itismeucci.chat.lib.*;
 
 /** Classe dello schema "list-update". */
 public final class ListUpdateSchema extends Schema implements UsernamesContainer

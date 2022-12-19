@@ -1,5 +1,6 @@
 package itismeucci.chat.lib;
 import java.util.*;
+import itismeucci.chat.lib.schemas.*;
 
 /** Classe di base per ogni schema JSON di JCSP. */
 public abstract class Schema

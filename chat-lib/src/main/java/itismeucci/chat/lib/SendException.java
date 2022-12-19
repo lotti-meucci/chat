@@ -1,5 +1,7 @@
 package itismeucci.chat.lib;
 
+import itismeucci.chat.lib.schemas.SendErrorSchema;
+
 public final class SendException extends ValidationException
 {
 	/** Tipo di errore. */

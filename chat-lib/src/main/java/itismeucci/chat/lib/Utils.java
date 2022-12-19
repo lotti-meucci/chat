@@ -1,8 +1,6 @@
 package itismeucci.chat.lib;
+import java.util.*;
 import com.fasterxml.jackson.databind.*;
-
-import java.util.ArrayList;
-
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.*;
 

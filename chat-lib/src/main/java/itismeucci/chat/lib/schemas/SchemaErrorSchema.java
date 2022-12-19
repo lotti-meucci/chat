@@ -1,4 +1,5 @@
-package itismeucci.chat.lib;
+package itismeucci.chat.lib.schemas;
+import itismeucci.chat.lib.*;
 
 /** Classe dello schema "schema-error". */
 public final class SchemaErrorSchema extends Schema

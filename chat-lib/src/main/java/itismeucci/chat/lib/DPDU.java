@@ -5,7 +5,7 @@ import java.nio.*;
 public final class DPDU
 {
 	/** Campo J. */
-	private final byte[] j;
+	private final Schema j;
 
 	/** Campo R. */
 	private final byte[] r;
@@ -18,7 +18,7 @@ public final class DPDU
 	 */
 	public DPDU(Schema j, byte[] r)
 	{
-		this.j = Schema.toJson(j).getBytes();
+		this.j = j;
 		this.r = r.clone();
 	}
 
@@ -28,16 +28,16 @@ public final class DPDU
 	 */
 	public long getN()
 	{
-		return j.length;
+		return Schema.toJson(j).getBytes().length;
 	}
 
 	/**
 	 * Getter del campo J.
 	 * @return Campo J.
 	 */
-	public String getJ()
+	public Schema getJ()
 	{
-		return new String(j.clone());
+		return j;
 	}
 
 	/**
@@ -64,6 +64,7 @@ public final class DPDU
 	 */
 	public byte[] getBytes()
 	{
+		var j = Schema.toJson(this.j).getBytes();
 		var buffer = ByteBuffer.allocate((int)(16 + getN() + getM()));
 		buffer.putLong(j.length);
 		buffer.put(j);

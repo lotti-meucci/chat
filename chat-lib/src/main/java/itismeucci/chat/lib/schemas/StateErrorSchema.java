@@ -1,4 +1,5 @@
-package itismeucci.chat.lib;
+package itismeucci.chat.lib.schemas;
+import itismeucci.chat.lib.*;
 
 /** Classe dello schema "state-error". */
 public final class StateErrorSchema extends Schema

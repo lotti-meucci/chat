@@ -1,5 +1,6 @@
-package itismeucci.chat.lib;
+package itismeucci.chat.lib.schemas;
 import java.util.*;
+import itismeucci.chat.lib.*;
 
 /** Classe dello schema "exit". */
 public class ExitSchema extends SignedSchema

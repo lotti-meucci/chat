@@ -1,5 +1,7 @@
 package itismeucci.chat.lib;
 
+import itismeucci.chat.lib.schemas.StateErrorSchema;
+
 /**
  * Eccezione generata quando uno schema non ha validità nello stato corrente
  * o ha un UUID errato.
