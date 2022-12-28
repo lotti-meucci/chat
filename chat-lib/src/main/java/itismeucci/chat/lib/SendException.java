@@ -1,6 +1,5 @@
 package itismeucci.chat.lib;
-
-import itismeucci.chat.lib.schemas.SendErrorSchema;
+import itismeucci.chat.lib.schemas.*;
 
 public final class SendException extends ValidationException
 {

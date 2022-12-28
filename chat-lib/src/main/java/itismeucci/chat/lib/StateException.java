@@ -1,6 +1,5 @@
 package itismeucci.chat.lib;
-
-import itismeucci.chat.lib.schemas.StateErrorSchema;
+import itismeucci.chat.lib.schemas.*;
 
 /**
  * Eccezione generata quando uno schema non ha validità nello stato corrente

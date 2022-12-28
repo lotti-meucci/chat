@@ -15,7 +15,7 @@ public final class ListSchema extends SignedSchema
 	 * Crea un'istanza col relativo UUID del richiedente.
 	 * @param id ID utente richiedente.
 	 */
-	protected ListSchema(UUID id) throws SchemaException
+	public ListSchema(UUID id) throws SchemaException
 	{
 		super("list", id);
 	}

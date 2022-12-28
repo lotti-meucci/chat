@@ -2,7 +2,6 @@ package itismeucci.chat.lib;
 import java.util.*;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.annotation.*;
-import com.fasterxml.jackson.annotation.JsonAutoDetect.*;
 
 /** Utility statiche interne alla libreria. */
 public final class Utils
@@ -13,16 +12,24 @@ public final class Utils
 	static
 	{
 		// Imposta il mapper per avere accesso unicamente ai campi escludendo i getter.
-		mapper.setVisibility(PropertyAccessor.ALL, Visibility.NONE);
-		mapper.setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
+		mapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.NONE);
+		mapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
 	}
 
+	/** Questo costruttore se chiamato genera un'eccezione. */
 	private Utils()
 	{
 		throw new UnsupportedOperationException();
 	}
 
-	public static <T> boolean exists(T id, Iterable<T> existingObjects)
+	/**
+	 * Controlla se un oggetto fa parte di un oggetto iterabile.
+	 * @param <T> Tipo dell'oggetto.
+	 * @param object L'oggetto in questione.
+	 * @param existingObjects L'oggetto iterabile.
+	 * @return Vero se l'oggetto esiste, altrimenti falso.
+	 */
+	public static <T> boolean exists(T object, Iterable<T> existingObjects)
 	{
 		var exists = false;
 
@@ -30,15 +37,15 @@ public final class Utils
 		{
 			for (var existingObj : existingObjects)
 			{
-				if (id == null)
+				if (object == null)
 				{
-					if (id == existingObj)
+					if (object == existingObj)
 					{
 						exists = true;
 						break;
 					}
 				}
-				else if (id.equals(existingObj))
+				else if (object.equals(existingObj))
 				{
 					exists = true;
 					break;
@@ -49,6 +56,13 @@ public final class Utils
 		return exists;
 	}
 
+	/**
+	 * Converte un oggetto iterabile in un array.
+	 * @param <T> Tipo in questione.
+	 * @param iterable L'oggetto iterabile.
+	 * @param array L'istanza dell'array di ritorno.
+	 * @return L'array in questione.
+	 */
 	public static <T> T[] toArray(Iterable<T> iterable, T[] array)
 	{
 		var list = new ArrayList<T>();

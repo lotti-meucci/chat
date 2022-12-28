@@ -14,7 +14,16 @@ public abstract class Schema
 		StateErrorSchema.class,
 		JoinSchema.class,
 		JoinErrorSchema.class,
-		JoinOkSchema.class
+		JoinOkSchema.class,
+		ListSchema.class,
+		ListUpdateSchema.class,
+		SendSchema.class,
+		SendErrorSchema.class,
+		SendOkSchema.class,
+		NotificationSchema.class,
+		CheckSchema.class,
+		HelloSchema.class,
+		ExitSchema.class
 	);
 
 	/**

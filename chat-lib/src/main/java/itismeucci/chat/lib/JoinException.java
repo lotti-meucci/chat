@@ -1,6 +1,5 @@
 package itismeucci.chat.lib;
-
-import itismeucci.chat.lib.schemas.JoinErrorSchema;
+import itismeucci.chat.lib.schemas.*;
 
 /** Eccezione generata quando uno schema "join" non è valido. */
 public final class JoinException extends ValidationException

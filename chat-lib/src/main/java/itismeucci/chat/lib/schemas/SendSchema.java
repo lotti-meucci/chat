@@ -29,7 +29,7 @@ public final class SendSchema extends SignedSchema implements UsernamesContainer
 	 * @throws SendException
 	 * 	La lista destinatari o il contenuto del messaggio non sono validi secondo JCSP
 	 */
-	protected SendSchema(UUID id, String text, Iterable<String> usernames) throws
+	public SendSchema(UUID id, String text, Iterable<String> usernames) throws
 		SchemaException,
 		SendException
 	{
@@ -41,6 +41,7 @@ public final class SendSchema extends SignedSchema implements UsernamesContainer
 		if (text.isEmpty())
 			throw new SendException(SendErrorType.INVISIBLE, List.of());
 
+		this.text = text;
 		this.usernames = Utils.toArray(usernames, new String[] { });
 
 		if (this.usernames.length == 0)

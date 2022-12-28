@@ -2,13 +2,23 @@ package itismeucci.chat.lib;
 import java.util.*;
 import itismeucci.chat.lib.schemas.*;
 
+/** Classe che rappresenta un client JCSP dal punto di vista di un server JCSP. */
 public class ClientHandler implements Runnable
 {
+	/** Nome dell'utente */
 	private String username;
-	private final Server parent;
-	private final DPDUSocket socket;
-	private Runnable onHello = () -> { };
 
+	/** Server padre del client. */
+	private final Server parent;
+
+	/** Canale di trasmissione. */
+	private final DPDUSocket socket;
+
+	/**
+	 * Crea un'istanza con il relativo server padre e canale di trasmissione.
+	 * @param parent Il server padre del client.
+	 * @param socket Il canale di trasmissione.
+	 */
 	public ClientHandler(Server parent, DPDUSocket socket)
 	{
 		if (parent == null)
@@ -22,27 +32,38 @@ public class ClientHandler implements Runnable
 		this.socket = socket;
 	}
 
-	public ClientHandler(Server parent, DPDUSocket socket, Runnable onHello)
-	{
-		this(parent, socket);
-		this.onHello = onHello;
-	}
-
+	/**
+	 * Getter del server padre.
+	 * @return Il server padre del client.
+	 */
 	public final Server getParent()
 	{
 		return parent;
 	}
 
+	/**
+	 * Getter del canale di trasmissione.
+	 * @return Il canale di trasmissione.
+	 */
 	public final DPDUSocket getSocket()
 	{
 		return socket;
 	}
 
+	/**
+	 * Getter del nome utente del client.
+	 * @return Il nome utente del client.
+	 */
 	public final String getUsername()
 	{
 		return username;
 	}
 
+	/**
+	 * Tenta il trasferimento di un DPDU da parte del server verso il client.
+	 * @param dpdu DPDU da trasferire.
+	 * @return Vero se la trasmissione è andata a buon fine, altrimenti falso.
+	 */
 	private final boolean tryTransfer(DPDU dpdu)
 	{
 		try
@@ -59,6 +80,9 @@ public class ClientHandler implements Runnable
 	@Override
 	public void run()
 	{
+		var maxSleepCount = 5;
+		var sleepCount = 0;
+
 		for (;;)
 		{
 			DPDU dpdu = null;
@@ -66,9 +90,35 @@ public class ClientHandler implements Runnable
 			try
 			{
 				dpdu = getSocket().receive();
+				sleepCount = 0;
 			}
 			catch (Exception e)
 			{
+				if (sleepCount >= maxSleepCount)
+				{
+					var id = new UUID(0, 0);
+
+					for (var entry : this.parent.getClients().entrySet())
+					{
+						if (entry.getValue() == this)
+						{
+							id = entry.getKey();
+							break;
+						}
+					}
+
+					getParent().getClients().remove(id);
+					getSocket().close();
+					return;
+				}
+
+				try
+				{
+					Thread.sleep(2000);
+				}
+				catch (Exception x) { }
+
+				++sleepCount;
 				continue;
 			}
 
@@ -96,6 +146,7 @@ public class ClientHandler implements Runnable
 					s.checkUsernamesValidity(getUsername(), parent.getUsernames());
 					var clients = getParent().getClients().values();
 
+					// Invia una notifica ad ogni utente selezionato dalla richiesta.
 					for (var client : clients)
 					{
 						for (var username : s.getUsernames())
@@ -113,7 +164,7 @@ public class ClientHandler implements Runnable
 					tryTransfer(new DPDU(new SendOkSchema(), dpdu.getR()));
 				}
 				else if (schema instanceof HelloSchema)
-					onHello.run();
+					parent.onClientHello(((HelloSchema)schema).getId());
 				else if (schema instanceof ExitSchema)
 				{
 					getParent().getClients().remove(((ExitSchema)schema).getId());
