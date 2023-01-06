@@ -1,9 +1,9 @@
 package itismeucci.chat.server;
 import java.io.*;
 import java.util.*;
-
 import itismeucci.chat.lib.*;
 
+/** Classe che rappresenta un server per chat. */
 public final class ChatServer extends Server
 {
 	/** Porta del server. */
