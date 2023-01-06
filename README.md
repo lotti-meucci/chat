@@ -4,6 +4,6 @@ for client-server communication.
 
 ---
 
-[JCSP protocol documentation (IT)](jcsp.pdf)
+- [JCSP protocol documentation (IT)](jcsp.pdf)
 
-[Chat documentation (IT)](https://lotti-meucci.github.io/chat/)
+- [Chat documentation (IT)](https://lotti-meucci.github.io/chat/)
