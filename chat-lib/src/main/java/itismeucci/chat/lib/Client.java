@@ -138,6 +138,10 @@ public abstract class Client
 			{
 				listening = onValidationException(e);
 			}
+			catch (Exception e)
+			{
+				return;
+			}
 		}
 	}
 
